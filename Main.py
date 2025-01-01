@@ -4,6 +4,8 @@ from upbit.upbitpackage import UpbitPackage
 from upbit.upbitapi import UpbitApi
 from ui.app import MyApp
 from PyQt5.QtWidgets import *
+import middle.UpbitDataGenerator as upbitdg
+import libs.BasicStrategy as bs
 
 config = ConfigParser()
 config.read('config.ini')
@@ -16,27 +18,21 @@ print(secret_key)
 print("Hello World")
 
 ### 거래할 코인 symbol
-coin = "KRW-XRP" 
+# coin = "KRW-XRP" 
 
+# a = UpbitApi(access_key, secret_key)
+# a.get_stock_code()
+# print("====================")
+# a.get_candle()
+# print("====================")
+# a.get_trade_history()
+# print("====================")
+# a.get_current_price()
+# print("====================")
 
-### 업비트 연동
-"""
-upbit = pyupbit.Upbit(access_key, secret_key)
-tickers = pyupbit.get_tickers()
-print(tickers)
-print(type(tickers))
-"""
-
-a = UpbitApi(access_key, secret_key)
-a.get_stock_code()
-print("====================")
-a.get_candle()
-print("====================")
-a.get_trade_history()
-print("====================")
-a.get_current_price()
-print("====================")
-
+upbitdatagenerator = upbitdg.UpbitDataGenerator(access_key, secret_key)
+strategy = bs.BasicStrategy(upbitdatagenerator)
+strategy.get_underlying_info()
 
 app = QApplication(sys.argv)
 ex = MyApp()
